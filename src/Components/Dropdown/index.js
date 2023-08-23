@@ -17,7 +17,7 @@ import TextWithIcon from '../TextWithIcon'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
-export default function DropDown ({ header, id, state , onVerify , email}) {
+export default function DropDown ({ header, id, state , onVerify ,onDelete, email}) {
   const items = !header
     ? [
         {
@@ -39,7 +39,7 @@ export default function DropDown ({ header, id, state , onVerify , email}) {
               text={'Delete'}
               icon={<DeleteOutlined />}
               color={'#E94E51'}
-              // onClick = {}
+              onClick = {() => onDelete(email)}
             />
           )
         },

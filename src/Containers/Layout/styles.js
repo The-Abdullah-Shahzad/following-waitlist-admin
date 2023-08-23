@@ -10,7 +10,7 @@ export const SideMenuContainer = styled.div`
   flex: 1.5;
   padding-top: 5rem;
   background-color: white;
-  height: 90vh;
+  min-height: 90vh;
   z-index: 100;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `

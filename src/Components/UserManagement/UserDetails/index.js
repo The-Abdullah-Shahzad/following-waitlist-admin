@@ -54,9 +54,9 @@ export default function UserDetailsComponent ({ data }) {
           <DeleteButton onClick={() => deleteUser(data?.email)} />
         </BtnContainer>
         <MobileBtnContainer>
-          <MobileBtn color={'#6c5ffc'}>
+          <ExportButton mobileView={true} userData={data} single={true}>
             <ExportOutlined />
-          </MobileBtn>
+          </ExportButton>
           <MobileBtn color={'#e94e51'} onClick={() => deleteUser(data?.email)}>
             <DeleteOutlined />
           </MobileBtn>

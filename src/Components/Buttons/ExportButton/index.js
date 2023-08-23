@@ -1,63 +1,48 @@
 import React from 'react'
 import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 import PrimaryButton from '../PrimaryButton'
+import { MobileBtn } from './styles'
+import { ExportOutlined } from '@ant-design/icons'
 
-export default function ExportButton ({ userData, single }) {
+export default function ExportButton ({ userData, single, mobileView }) {
   const generateMultiUserPDF = () => {
     const doc = new jsPDF()
 
     doc.setFontSize(18)
     doc.text('User Data', 10, 10) // Add a title
 
-    const yOffset = 20
-    const lineHeight = 10
+    const tableData = userData.map(user => [
+      user.name,
+      user.email,
+      user.phoneNumber,
+      user.snapchat || '- -',
+      user.instagram || '- -',
+      user.tiktok || '- -',
+      user.isLicensed ? 'Yes' : 'No',
+      user.isApproved ? 'Verified' : 'Pending'
+    ])
 
-    doc.setFontSize(11)
-    userData.forEach((user, index) => {
-      doc.text(`Name: ${user.name}`, 10, yOffset + index * lineHeight)
-      doc.text(
-        `Email: ${user.email}`,
-        10,
-        yOffset + index * lineHeight + lineHeight
-      )
-      doc.text(
-        `Phone Number: ${user.phoneNumber}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 2
-      )
-      doc.text(
-        `Snapchat: ${user.snapchat || '- -'}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 3
-      )
-      doc.text(
-        `Instagram: ${user.instagram || '- -'}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 4
-      )
-      doc.text(
-        `TikTok: ${user.tiktok || '- -'}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 5
-      )
-      doc.text(
-        `Licensed: ${user.licensed ? 'Yes' : 'No'}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 6
-      )
-      doc.text(
-        `Status: ${user.status === 'verified' ? 'Verified' : 'Pending'}`,
-        10,
-        yOffset + index * lineHeight + lineHeight * 7
-      )
+    // Define the columns for the table
+    const tableColumns = [
+      'Name',
+      'Email',
+      'Phone Number',
+      'Snapchat',
+      'Instagram',
+      'TikTok',
+      'Licensed',
+      'Status'
+    ]
 
-      if (index < userData.length - 1) {
-        doc.line(
-          10,
-          yOffset + index * lineHeight + lineHeight * 8,
-          200,
-          yOffset + index * lineHeight + lineHeight * 8
-        ) // Draw a line to separate users
+    doc.setFontSize(9)
+    doc.autoTable({
+      head: [tableColumns], // Add the table headers
+      body: tableData, // Add the table data
+      startY: 20, // Start the table from vertical position 20
+      theme: 'grid', // Set the theme to 'plain'
+      styles: {
+        fontSize: 10
       }
     })
 
@@ -96,7 +81,13 @@ export default function ExportButton ({ userData, single }) {
 
     doc.save(`${userData.name}_details.pdf`) // Save the PDF with user's name
   }
-  return (
+  return mobileView ? (
+    <MobileBtn>
+      <ExportOutlined
+        onClick={single ? generateSingleUserPDF : generateMultiUserPDF}
+      />
+    </MobileBtn>
+  ) : (
     <PrimaryButton
       text={'Export Record'}
       onClick={single ? generateSingleUserPDF : generateMultiUserPDF}

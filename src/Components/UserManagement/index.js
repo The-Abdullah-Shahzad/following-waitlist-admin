@@ -21,6 +21,7 @@ export default function UserManagementComponent ({
   getAll,
   totalPages,
   onVerify,
+  onDelete,
   reload
 }) {
   const pageSize = 10
@@ -191,6 +192,7 @@ export default function UserManagementComponent ({
             email={email}
             state={isApproved}
             onVerify={onVerify}
+            onDelete = {onDelete}
           />
         )
       }
