@@ -35,18 +35,32 @@ export default function UserManagementComponent ({
   }
 
   const columns = [
+    // {
+    //   title: (
+    //     <Tooltip title='ID'>
+    //       <span>ID</span>
+    //     </Tooltip>
+    //   ),
+    //   dataIndex: 'id',
+    //   key: 'id',
+    //   fixed: 'left',
+    //   render: (__, { id }) => (
+    //     <Tooltip title={`ID: ${id}`}>
+    //       <span>{id}</span>
+    //     </Tooltip>
+    //   )
+    // },
     {
       title: (
-        <Tooltip title='ID'>
-          <span>ID</span>
+        <Tooltip title='Sr. No'>
+          <span>Sr. No</span>
         </Tooltip>
       ),
-      dataIndex: 'id',
-      key: 'id',
+      key: 'srNo',
       fixed: 'left',
-      render: (__, { id }) => (
-        <Tooltip title={`ID: ${id}`}>
-          <span>{id}</span>
+      render: (__, ___, index) => (
+        <Tooltip title={`Sr. No: ${index + 1 + (currentPage - 1) * pageSize}`}>
+          <span>{index + 1 + (currentPage - 1) * pageSize}</span>
         </Tooltip>
       )
     },
@@ -192,7 +206,7 @@ export default function UserManagementComponent ({
             email={email}
             state={isApproved}
             onVerify={onVerify}
-            onDelete = {onDelete}
+            onDelete={onDelete}
           />
         )
       }
