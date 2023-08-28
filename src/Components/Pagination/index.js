@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { AntPagination } from './styles'
 
@@ -12,16 +11,16 @@ const itemRender = (_, type, originalElement) => {
   return originalElement
 }
 
-export default function Pagination ({ totalPages, currentPage, onPageChange }) {
+export default function Pagination ({ currentPage, onPageChange, totalUsers }) {
   const pageSize = 10 // Set your page size here
-
   return (
     <AntPagination
       current={currentPage}
-      total={totalPages}
+      total={totalUsers}
       pageSize={pageSize}
       itemRender={itemRender}
       onChange={onPageChange}
+      responsive = {true}
     />
   )
 }

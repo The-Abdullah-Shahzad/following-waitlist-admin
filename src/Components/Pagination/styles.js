@@ -55,4 +55,8 @@ export const AntPagination = styled(Pagination)`
   .ant-pagination-next {
     margin-left: 10px;
   }
+
+  .ant-pagination-options-size-changer{
+  display:none;
+  }
 `

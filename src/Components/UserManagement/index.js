@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   MainContainer,
   CardHeader,
@@ -7,9 +7,10 @@ import {
   LisenceDiv,
   StatusDiv,
   TableContainer,
+  Text,
   CardFooter
 } from './styles'
-import PrimaryButton from '../Buttons/PrimaryButton'
+
 import { AntTable } from '../Table/styles'
 import DropDown from '../Dropdown'
 import Pagination from '../Pagination'
@@ -17,39 +18,25 @@ import { Tooltip } from 'antd'
 import ExportButton from '../Buttons/ExportButton'
 
 export default function UserManagementComponent ({
-  dataSource,
-  getAll,
+  usersData,
+  totalUsers,
+  currentPage,
+  setCurrentPage,
+  onPageChange,
   totalPages,
   onVerify,
   onDelete,
-  reload
+  reload,
+  setReload
 }) {
   const pageSize = 10
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const startIndex = (currentPage - 1) * pageSize
-  const endIndex = startIndex + pageSize
 
   const handlePageChange = page => {
     setCurrentPage(page)
+    onPageChange(page) // Notify the parent component about the page change
+    setReload(!reload)
   }
-
   const columns = [
-    // {
-    //   title: (
-    //     <Tooltip title='ID'>
-    //       <span>ID</span>
-    //     </Tooltip>
-    //   ),
-    //   dataIndex: 'id',
-    //   key: 'id',
-    //   fixed: 'left',
-    //   render: (__, { id }) => (
-    //     <Tooltip title={`ID: ${id}`}>
-    //       <span>{id}</span>
-    //     </Tooltip>
-    //   )
-    // },
     {
       title: (
         <Tooltip title='Sr. No'>
@@ -75,7 +62,7 @@ export default function UserManagementComponent ({
       fixed: 'left',
       render: (__, { name }) => (
         <Tooltip title={`Name: ${name}`}>
-          <span>{name}</span>
+          <Text>{name}</Text>
         </Tooltip>
       )
     },
@@ -91,7 +78,9 @@ export default function UserManagementComponent ({
       render: (__, { email }) => {
         return (
           <Tooltip title={email}>
-            <u>{email}</u>
+            <Text>
+              <u>{email}</u>
+            </Text>
           </Tooltip>
         )
       }
@@ -108,7 +97,7 @@ export default function UserManagementComponent ({
 
       render: (__, { phoneNumber }) => (
         <Tooltip title={`phone number: ${phoneNumber}`}>
-          <span>{phoneNumber}</span>
+          <Text>{phoneNumber}</Text>
         </Tooltip>
       )
     },
@@ -141,7 +130,7 @@ export default function UserManagementComponent ({
       fixed: 'left',
       render: (__, { snapchat }) => (
         <Tooltip title={`ID: ${snapchat}`}>
-          <span>{snapchat || '- -'}</span>
+          <Text>{snapchat || '- -'}</Text>
         </Tooltip>
       )
     },
@@ -156,7 +145,7 @@ export default function UserManagementComponent ({
       fixed: 'left',
       render: (__, { instagram }) => (
         <Tooltip title={`ID: ${instagram}`}>
-          <span>{instagram || '- -'}</span>
+          <Text>{instagram || '- -'}</Text>
         </Tooltip>
       )
     },
@@ -171,7 +160,7 @@ export default function UserManagementComponent ({
       fixed: 'left',
       render: (__, { tiktok }) => (
         <Tooltip title={`ID: ${tiktok}`}>
-          <span>{tiktok || '- -'}</span>
+          <Text>{tiktok || '- -'}</Text>
         </Tooltip>
       )
     },
@@ -207,38 +196,40 @@ export default function UserManagementComponent ({
             state={isApproved}
             onVerify={onVerify}
             onDelete={onDelete}
+            currentPage={currentPage}
           />
         )
       }
     }
   ]
 
-  useEffect(() => {
-    getAll(currentPage)
-  }, [currentPage, reload])
-
   return (
     <MainContainer>
       <CardHeader>
         <CardTitle>Waitlist Users</CardTitle>
-        <ExportButton userData={dataSource} />
+        <ExportButton userData={usersData} />
       </CardHeader>
-      <CardBody>
-        <TableContainer>
-          <AntTable
-            className='antTable'
-            size='middle'
-            columns={columns}
-            dataSource={dataSource?.slice(startIndex, endIndex)} // Display only the records for the current page
-            pagination={false}
-          />
-        </TableContainer>
-      </CardBody>
+      {usersData && usersData.length > 0 ? (
+        <CardBody>
+          <TableContainer>
+            <AntTable
+              className='antTable'
+              size='middle'
+              columns={columns}
+              dataSource={usersData} // Use the passed usersData prop
+              pagination={false}
+            />
+          </TableContainer>
+        </CardBody>
+      ) : (
+        <p>Loading...</p>
+      )}
       <CardFooter>
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          totalUsers={totalUsers}
         />
       </CardFooter>
     </MainContainer>

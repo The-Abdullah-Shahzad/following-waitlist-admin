@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import UserManagementComponent from '../../Components/UserManagement'
 import axios from 'axios'
-import { GET_USERS, APPROVE_USER } from '../../utils/API'
-import { useNavigate } from 'react-router-dom'
-import { DELETE_USER } from '../../utils/API'
+import { GET_USERS, APPROVE_USER, DELETE_USER } from '../../utils/API'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function UserManagementContainer () {
-  const [reload, setReload] = useState(false)
   const token = localStorage.getItem('token')
-  const [users, setUsers] = useState({})
+  const [reload, setReload] = useState(false)
+  const [usersData, setUsersData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
   const navigate = useNavigate()
+  const location = useLocation()
 
   // Get All Users API
   const getAll = page => {
@@ -19,11 +20,18 @@ export default function UserManagementContainer () {
       })
       .then(function (response) {
         console.log(response)
-        setUsers(response.data)
+        setUsersData(response.data)
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 403) {
+          console.log('403 Forbidden error. Clearing local storage...')
+          localStorage.removeItem('token') // Clear the token
+          navigate('/')
+        }
       })
   }
 
-  //Verify / No verify user
+  // Verify / No verify user
   const approveUser = (email, verification) => {
     axios
       .put(
@@ -35,7 +43,6 @@ export default function UserManagementContainer () {
       )
       .then(function (res) {
         console.log(res)
-        navigate('/users')
         setReload(!reload)
       })
       .catch(function (error) {
@@ -44,7 +51,7 @@ export default function UserManagementContainer () {
   }
 
   // Delete Users
-   const deleteUser = email => {
+  const deleteUser = email => {
     axios
       .put(
         DELETE_USER,
@@ -62,15 +69,33 @@ export default function UserManagementContainer () {
       })
   }
 
+  useEffect(() => {
+    // Extract page parameter from URL and set it as currentPage
+    const queryParams = new URLSearchParams(location.search)
+    const pageParam = queryParams.get('page')
+    const page = pageParam ? parseInt(pageParam) : 1
+    setCurrentPage(page)
+    // Fetch data when currentPage or reload changes
+    getAll(currentPage)
+  }, [currentPage, reload])
+
+  const handlePageChange = page => {
+    // setCurrentPage(page)
+    // Navigate to the new route using the page parameter
+    navigate(`/users?page=${page}`)
+  }
 
   return (
     <UserManagementComponent
+      usersData={usersData?.data}
+      totalUsers={usersData?.total}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage} // Pass setCurrentPage as a prop
+      onPageChange={handlePageChange}
       reload={reload}
-      dataSource={users?.data}
-      getAll={getAll}
-      totalPages={users?.total_pages}
+      setReload={setReload}
       onVerify={approveUser}
-      onDelete = {deleteUser}
+      onDelete={deleteUser}
     />
   )
 }

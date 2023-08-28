@@ -52,9 +52,9 @@ export const CardBody = styled.div`
   margin: 2rem 0;
 `
 
-export const TableContainer = styled.div`;
-overflow-x: hidden;
-position: relative;
+export const TableContainer = styled.div`
+  overflow-x: hidden;
+  position: relative;
   height: 30rem;
   border-bottom: 1px solid #e9edf4;
   padding: 1rem;
@@ -66,15 +66,19 @@ position: relative;
     overflow-x: auto;
     white-space: nowrap; /* To prevent wrapping of table content */
   }
-  .antTable{
-  border: none;
-  width: 100%;
-  position: absolute;
-  @media (max-width: 1200px) {
-    overflow-x: scroll;
-  }
-  
+  .antTable {
+    border: none;
+    width: 100%;
+    position: absolute;
+    @media (max-width: 1200px) {
+      overflow-x: scroll;
+    }
   }
 `
-
+export const Text = styled.div`
+  width: 5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
 export const CardFooter = styled.div``

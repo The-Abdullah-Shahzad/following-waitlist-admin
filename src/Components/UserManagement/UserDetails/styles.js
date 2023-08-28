@@ -16,7 +16,7 @@ export const CardHeader = styled.div`
 
 export const BtnContainer = styled.div`
   display: none;
-  @media (min-width: 480px) {
+  @media (min-width: 481px) {
     display: flex;
     gap: 1rem;
   }
@@ -40,7 +40,7 @@ export const InfoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 1rem;
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
   }
@@ -77,4 +77,7 @@ export const InviteContainer = styled.div`
 export const CardFooter = styled.div`
   display: flex;
   justify-content: flex-end;
+  @media (max-width: 480px) {
+    justify-content: center;
+  }
 `

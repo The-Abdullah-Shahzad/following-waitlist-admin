@@ -17,13 +17,21 @@ import TextWithIcon from '../TextWithIcon'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
-export default function DropDown ({ header, id, state , onVerify ,onDelete, email}) {
+export default function DropDown ({
+  header,
+  id,
+  state,
+  onVerify,
+  onDelete,
+  currentPage,
+  email
+}) {
   const items = !header
     ? [
         {
           key: 1,
           label: (
-            <Link to={`/user/${id}`}>
+            <Link to={`/user/${id}?page=${currentPage}`}>
               <TextWithIcon
                 text={'View'}
                 icon={<ExportOutlined />}
@@ -39,7 +47,7 @@ export default function DropDown ({ header, id, state , onVerify ,onDelete, emai
               text={'Delete'}
               icon={<DeleteOutlined />}
               color={'#E94E51'}
-              onClick = {() => onDelete(email)}
+              onClick={() => onDelete(email)}
             />
           )
         },
@@ -92,6 +100,7 @@ export default function DropDown ({ header, id, state , onVerify ,onDelete, emai
           )
         }
       ]
+      console.log("Currentpage ==========" + currentPage)
   return (
     <AntdDropdown menu={{ items }} placement='bottomRight'>
       <MenuButton header={header}>
