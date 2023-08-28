@@ -8,6 +8,8 @@ import {
   StatusDiv,
   TableContainer,
   Text,
+  Mobile,
+  Desktop,
   CardFooter
 } from './styles'
 
@@ -207,7 +209,12 @@ export default function UserManagementComponent ({
     <MainContainer>
       <CardHeader>
         <CardTitle>Waitlist Users</CardTitle>
-        <ExportButton userData={usersData} />
+        <Desktop>
+          <ExportButton userData={usersData} />
+        </Desktop>
+        <Mobile>
+          <ExportButton userData={usersData} mobileView={true} />
+        </Mobile>
       </CardHeader>
       {usersData && usersData.length > 0 ? (
         <CardBody>

@@ -76,7 +76,7 @@ export default function UserManagementContainer () {
     const page = pageParam ? parseInt(pageParam) : 1
     setCurrentPage(page)
     // Fetch data when currentPage or reload changes
-    getAll(currentPage)
+    getAll(page)
   }, [currentPage, reload])
 
   const handlePageChange = page => {

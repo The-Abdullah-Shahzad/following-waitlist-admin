@@ -81,4 +81,16 @@ export const Text = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
 `
+export const Desktop = styled.div`
+  @media (max-width: 480px) {
+    display: none;
+  }
+`
+export const Mobile = styled.div`
+  display: none;
+  @media (max-width: 480px) {
+    display: block;
+  }
+`
+
 export const CardFooter = styled.div``
