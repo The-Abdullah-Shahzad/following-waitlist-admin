@@ -12,7 +12,7 @@ const itemRender = (_, type, originalElement) => {
 }
 
 export default function Pagination ({ currentPage, onPageChange, totalUsers }) {
-  const pageSize = 10 // Set your page size here
+  const pageSize = 100 // Set your page size here
   return (
     <AntPagination
       current={currentPage}

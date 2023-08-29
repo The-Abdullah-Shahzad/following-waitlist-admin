@@ -15,7 +15,7 @@ export default function UserManagementContainer () {
   // Get All Users API
   const getAll = page => {
     axios
-      .get(GET_USERS + `?page=${page}&per_page=10`, {
+      .get(GET_USERS + `?page=${page}&per_page=100`, {
         headers: { token: token }
       })
       .then(function (response) {
