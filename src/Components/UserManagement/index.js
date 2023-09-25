@@ -228,8 +228,12 @@ export default function UserManagementComponent ({
             />
           </TableContainer>
         </CardBody>
-      ) : (
+      ) : !usersData ? (
         <p>Loading...</p>
+      ) : (
+        <p style={{ fontSize: '13px', color: 'gray', fontWeight: 500 }}>
+          No Users to display
+        </p>
       )}
       <CardFooter>
         <Pagination
