@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UserManagementComponent from '../../Components/UserManagement'
 import axios from 'axios'
-import { GET_USERS, APPROVE_USER, DELETE_USER } from '../../utils/API'
+import { APPROVE_USER, DELETE_USER, GET_USERS_PROD } from '../../utils/API'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function UserManagementContainer () {
@@ -15,7 +15,7 @@ export default function UserManagementContainer () {
   // Get All Users API
   const getAll = page => {
     axios
-      .get(GET_USERS + `?page=${page}&per_page=100`, {
+      .get(GET_USERS_PROD, {
         headers: { token: token }
       })
       .then(function (response) {
@@ -85,6 +85,8 @@ export default function UserManagementContainer () {
     navigate(`/users?page=${page}`)
   }
 
+  const dataFiller = () => {}
+
   return (
     <UserManagementComponent
       usersData={usersData?.data}
@@ -99,3 +101,5 @@ export default function UserManagementContainer () {
     />
   )
 }
+
+

@@ -31,7 +31,7 @@ export default function UserManagementComponent ({
   reload,
   setReload
 }) {
-  const pageSize = 10
+  const pageSize = 100
 
   const handlePageChange = page => {
     setCurrentPage(page)
