@@ -85,7 +85,7 @@ export default function UserManagementContainer () {
     navigate(`/users?page=${page}`)
   }
 
-  const dataFiller = () => {}
+  
 
   return (
     <UserManagementComponent

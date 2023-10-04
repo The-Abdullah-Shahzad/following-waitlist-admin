@@ -4,6 +4,7 @@ import 'jspdf-autotable'
 import PrimaryButton from '../PrimaryButton'
 import { MobileBtn } from './styles'
 import { ExportOutlined } from '@ant-design/icons'
+import * as XLSX from 'xlsx'
 
 export default function ExportButton ({ userData, single, mobileView }) {
   const generateMultiUserPDF = () => {
@@ -35,7 +36,7 @@ export default function ExportButton ({ userData, single, mobileView }) {
       'Status'
     ]
 
-    doc.setFontSize(9)
+    doc.setFontSize(20)
     doc.autoTable({
       head: [tableColumns], // Add the table headers
       body: tableData, // Add the table data
@@ -91,6 +92,140 @@ export default function ExportButton ({ userData, single, mobileView }) {
     <PrimaryButton
       text={'Export Record'}
       onClick={single ? generateSingleUserPDF : generateMultiUserPDF}
+    />
+  )
+}
+
+// For exporting as Excel sheets --------------------------------------------------------------------------------------------------------------------------------------
+const exportToExcel = data => {
+  // Extract only the fields you want from each object
+  const filteredData = data.map(user => ({
+    Influencer_ID: user.id,
+    Name: user.name,
+    Email: user.email,
+    Phone_Number: user.phoneNumber,
+    Verified: user.isVerified ? 'Yes' : 'No',
+    Snapchat: user.snapchat,
+    Instagram: user.instagram,
+    Tiktok: user.tiktok,
+    Licensed: user.isLicensed ? 'Yes' : 'No'
+  }))
+  const ws = XLSX.utils.json_to_sheet(filteredData)
+
+  // Define column headers with styles
+  const headers = [
+    {
+      t: 'Influencer_ID',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: {
+          bgColor: { rgb: 'FFFF00' },
+          fgColor: { rgb: '000000' },
+          alignment: { horizontal: 'left' }
+        }
+      },
+      wpx: 80
+    },
+    {
+      t: 'Name',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 120
+    },
+    {
+      t: 'Email',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Phone_Number',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Verified',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Snapchat',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Instagram',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Tiktok',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    },
+    {
+      t: 'Licensed',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+      },
+      wpx: 200
+    }
+  ]
+
+  ws['!cols'] = headers
+
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1')
+  const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+  const blob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'user_data.xlsx'
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+export const ExportAsExcel = ({ userData, mobileView }) => {
+  return mobileView ? (
+    <MobileBtn>
+      <ExportOutlined onClick={() => exportToExcel(userData)} />
+    </MobileBtn>
+  ) : (
+    <PrimaryButton
+      text={'Export Record'}
+      onClick={() => exportToExcel(userData)}
     />
   )
 }

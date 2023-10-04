@@ -18,6 +18,7 @@ import DropDown from '../Dropdown'
 import Pagination from '../Pagination'
 import { Tooltip } from 'antd'
 import ExportButton from '../Buttons/ExportButton'
+import { ExportAsExcel } from '../Buttons/ExportButton'
 
 export default function UserManagementComponent ({
   usersData,
@@ -210,10 +211,10 @@ export default function UserManagementComponent ({
       <CardHeader>
         <CardTitle>Waitlist Users</CardTitle>
         <Desktop>
-          <ExportButton userData={usersData} />
+          <ExportAsExcel userData={usersData} />
         </Desktop>
         <Mobile>
-          <ExportButton userData={usersData} mobileView={true} />
+          <ExportAsExcel userData={usersData} mobileView={true} />
         </Mobile>
       </CardHeader>
       {usersData && usersData.length > 0 ? (
