@@ -37,7 +37,7 @@ export default function UserDetailsComponent ({ data }) {
         }
       )
       .then(function (res) {
-        console.log(res)
+        // console.log(res)
         navigate('/users')
       })
       .catch(function (error) {

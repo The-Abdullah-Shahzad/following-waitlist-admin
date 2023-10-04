@@ -19,7 +19,7 @@ export default function VerifyButton ({ state, email }) {
         }
       )
       .then(function (res) {
-        console.log(res)
+        // console.log(res)
         navigate('/users')
       })
       .catch(function (error) {

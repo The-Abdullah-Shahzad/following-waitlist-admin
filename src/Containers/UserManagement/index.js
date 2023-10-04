@@ -19,7 +19,7 @@ export default function UserManagementContainer () {
         headers: { token: token }
       })
       .then(function (response) {
-        console.log(response)
+        // console.log(response)
         setUsersData(response.data)
       })
       .catch(function (error) {
@@ -42,7 +42,7 @@ export default function UserManagementContainer () {
         }
       )
       .then(function (res) {
-        console.log(res)
+        // console.log(res)
         setReload(!reload)
       })
       .catch(function (error) {
@@ -61,7 +61,7 @@ export default function UserManagementContainer () {
         }
       )
       .then(function (res) {
-        console.log(res)
+        // console.log(res)
         setReload(!reload)
       })
       .catch(function (error) {

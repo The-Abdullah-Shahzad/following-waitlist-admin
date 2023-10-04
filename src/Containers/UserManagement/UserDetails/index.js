@@ -14,7 +14,7 @@ export default function UserDetailsCotainer () {
     axios
       .get(GET_USER + id, { headers: { token: token } })
       .then(function (res) {
-        console.log(res)
+        // console.log(res)
         setUser(res.data.data)
       })
   }

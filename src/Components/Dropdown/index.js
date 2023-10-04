@@ -100,7 +100,6 @@ export default function DropDown ({
           )
         }
       ]
-      console.log("Currentpage ==========" + currentPage)
   return (
     <AntdDropdown menu={{ items }} placement='bottomRight'>
       <MenuButton header={header}>
