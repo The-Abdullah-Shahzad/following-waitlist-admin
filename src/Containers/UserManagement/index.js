@@ -15,7 +15,7 @@ export default function UserManagementContainer () {
   // Get All Users API
   const getAll = page => {
     axios
-      .get(GET_USERS_PROD, {
+      .get(GET_USERS_PROD(page), {
         headers: { token: token }
       })
       .then(function (response) {
@@ -85,8 +85,6 @@ export default function UserManagementContainer () {
     navigate(`/users?page=${page}`)
   }
 
-  
-
   return (
     <UserManagementComponent
       usersData={usersData?.data}
@@ -101,5 +99,3 @@ export default function UserManagementContainer () {
     />
   )
 }
-
-

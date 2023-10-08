@@ -62,22 +62,27 @@ export default function ExportButton ({ userData, single, mobileView }) {
     doc.text(`Name: ${userData.name}`, 10, 20)
     doc.text(`Email: ${userData.email}`, 10, 20 + lineHeight)
     doc.text(`Phone Number: ${userData.phoneNumber}`, 10, 20 + lineHeight * 2)
-    doc.text(`Snapchat: ${userData.snapchat || '- -'}`, 10, 20 + lineHeight * 3)
+    doc.text(
+      `Accepted Invites: ${userData.referralCount}`,
+      10,
+      20 + lineHeight * 3
+    )
+    doc.text(`Snapchat: ${userData.snapchat || '- -'}`, 10, 20 + lineHeight * 4)
     doc.text(
       `Instagram: ${userData.instagram || '- -'}`,
       10,
-      20 + lineHeight * 4
+      20 + lineHeight * 5
     )
-    doc.text(`TikTok: ${userData.tiktok || '- -'}`, 10, 20 + lineHeight * 5)
+    doc.text(`TikTok: ${userData.tiktok || '- -'}`, 10, 20 + lineHeight * 6)
     doc.text(
       `Licensed: ${userData.licensed ? 'Yes' : 'No'}`,
       10,
-      20 + lineHeight * 6
+      20 + lineHeight * 7
     )
     doc.text(
       `Status: ${userData.status === 'verified' ? 'Verified' : 'Pending'}`,
       10,
-      20 + lineHeight * 7
+      20 + lineHeight * 8
     )
 
     doc.save(`${userData.name}_details.pdf`) // Save the PDF with user's name
@@ -100,7 +105,7 @@ export default function ExportButton ({ userData, single, mobileView }) {
 const exportToExcel = data => {
   // Extract only the fields you want from each object
   const filteredData = data.map(user => ({
-    Influencer_ID: user.id,
+    Influencer_ID: `${user.id}`,
     Name: user.name,
     Email: user.email,
     Phone_Number: user.phoneNumber,
@@ -108,7 +113,8 @@ const exportToExcel = data => {
     Snapchat: user.snapchat,
     Instagram: user.instagram,
     Tiktok: user.tiktok,
-    Licensed: user.isLicensed ? 'Yes' : 'No'
+    Licensed: user.isLicensed ? 'Yes' : 'No',
+    Accepted_Invites: `${user.referralCount}`
   }))
   const ws = XLSX.utils.json_to_sheet(filteredData)
 
@@ -121,9 +127,9 @@ const exportToExcel = data => {
         fontWeight: 'bold',
         fill: {
           bgColor: { rgb: 'FFFF00' },
-          fgColor: { rgb: '000000' },
-          alignment: { horizontal: 'left' }
-        }
+          fgColor: { rgb: '000000' }
+        },
+        alignment: { horizontal: 'center' }
       },
       wpx: 80
     },
@@ -132,7 +138,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 120
     },
@@ -141,7 +148,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -150,7 +158,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -159,7 +168,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -168,7 +178,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -177,7 +188,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -186,7 +198,8 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
     },
@@ -195,9 +208,20 @@ const exportToExcel = data => {
       s: {
         fontSize: 12,
         fontWeight: 'bold',
-        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } }
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: { horizontal: 'center' }
       },
       wpx: 200
+    },
+    {
+      t: 'Accepted_Invites',
+      s: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        fill: { bgColor: { rgb: 'FFFF00' }, fgColor: { rgb: '000000' } },
+        alignment: 'center'
+      },
+      wpx: 100
     }
   ]
 
