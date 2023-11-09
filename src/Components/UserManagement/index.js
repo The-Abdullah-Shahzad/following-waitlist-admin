@@ -123,7 +123,7 @@ export default function UserManagementComponent ({
     {
       title: (
         <Tooltip title='CONTENT'>
-          <span>CONTENT Type</span>
+          <span>CONTENT TYPE</span>
         </Tooltip>
       ),
       dataIndex: 'contentCategory',
