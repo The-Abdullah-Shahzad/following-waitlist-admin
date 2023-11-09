@@ -105,6 +105,40 @@ export default function UserManagementComponent ({
     },
     {
       title: (
+        <Tooltip title='CITY'>
+          <span>CITY</span>
+        </Tooltip>
+      ),
+      dataIndex: 'city',
+      key: 'city',
+      fixed: 'left',
+      render: (__, { city }) => {
+        return (
+          <Tooltip title={city}>
+            <Text>{city}</Text>
+          </Tooltip>
+        )
+      }
+    },
+    {
+      title: (
+        <Tooltip title='CONTENT'>
+          <span>CONTENT Type</span>
+        </Tooltip>
+      ),
+      dataIndex: 'contentCategory',
+      key: 'contentCategory',
+      fixed: 'left',
+      render: (__, { contentCategory }) => {
+        return (
+          <Tooltip title={contentCategory}>
+            <Text>{contentCategory}</Text>
+          </Tooltip>
+        )
+      }
+    },
+    {
+      title: (
         <Tooltip title='LISENCED'>
           <span>LISENCED</span>
         </Tooltip>
