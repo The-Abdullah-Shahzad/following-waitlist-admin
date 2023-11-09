@@ -6,3 +6,5 @@ export const DELETE_USER = Main + 'admin/deleteUser'
 export const APPROVE_USER = Main + 'admin/approveUser'
 export const GET_USERS_PROD = page =>
   Main + `admin/getAllInfluencers?page=${page}&per_page=100`
+
+export const GET_ALL_USERS = Main + 'admin/getAllInfluencersWithoutPagination'

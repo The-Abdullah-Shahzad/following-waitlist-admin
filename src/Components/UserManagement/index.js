@@ -17,7 +17,6 @@ import { AntTable } from '../Table/styles'
 import DropDown from '../Dropdown'
 import Pagination from '../Pagination'
 import { Tooltip } from 'antd'
-import ExportButton from '../Buttons/ExportButton'
 import { ExportAsExcel } from '../Buttons/ExportButton'
 
 export default function UserManagementComponent ({
@@ -211,10 +210,10 @@ export default function UserManagementComponent ({
       <CardHeader>
         <CardTitle>Waitlist Users</CardTitle>
         <Desktop>
-          <ExportAsExcel userData={usersData} />
+          <ExportAsExcel />
         </Desktop>
         <Mobile>
-          <ExportAsExcel userData={usersData} mobileView={true} />
+          <ExportAsExcel mobileView={true} />
         </Mobile>
       </CardHeader>
       {usersData && usersData.length > 0 ? (
